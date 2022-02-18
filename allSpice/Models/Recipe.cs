@@ -1,4 +1,3 @@
-
 using System.ComponentModel.DataAnnotations;
 
 namespace allSpice.Models
@@ -16,6 +15,8 @@ namespace allSpice.Models
 
         [Required]
         public string CreatorId { get; set; }
+
+        public Profile Chef { get; set; }
 
     }
 }
