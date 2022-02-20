@@ -14,5 +14,7 @@ namespace allSpice.Models
 
         [Required]
         public int RecipeId { get; set; }
+
+        public Account creatorId { get; set; }
     }
 }

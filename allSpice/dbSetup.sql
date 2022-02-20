@@ -20,12 +20,15 @@ CREATE Table IF NOT EXISTS ingrediants(
   name VARCHAR(255) NOT NULL,
   quantity INT NOT NULL,
   recipeId INT NOT NULL,
+  creatorId VARCHAR(255) NOT NULL,
   FOREIGN KEY(recipeId) REFERENCES recipes(id) ON DELETE CASCADE
 ) default charset utf8 COMMENT '';
+DROP Table steps;
 CREATE Table IF NOT EXISTS steps(
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   numberedSteps INT NOT NULL,
   body VARCHAR(255) NOT NULL,
   recipeId INT NOT NULL,
+  creatorId VARCHAR(255) NOT NULL,
   FOREIGN KEY(recipeId) REFERENCES recipes(id) ON DELETE CASCADE
 ) default charset utf8 COMMENT '';

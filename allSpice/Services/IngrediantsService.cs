@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using allSpice.Models;
+using allSpice.Repositories;
 
 namespace allSpice.Services
 {
@@ -35,9 +36,9 @@ namespace allSpice.Services
         internal void remove(int id, string userId)
         {
             Ingrediant ingrediantToDelete = getById(id);
-            if (ingrediantToDelete.creatorId != userId)
+            if (ingrediantToDelete.creatorId.ToString() != userId)
             {
-                throw new Exception("UnAuthorized")
+                throw new Exception("UnAuthorized");
             }
             _ir.remove(id);
         }
@@ -45,11 +46,12 @@ namespace allSpice.Services
         internal Ingrediant edit(Ingrediant ingrediant, string userId)
         {
             Ingrediant foundIngrediant = getById(ingrediant.Id);
-            if (foundIngrediant.CreatorId != userId)
+            if (foundIngrediant.creatorId.ToString() != userId)
             {
                 throw new Exception("UnAuthorized");
             }
-            foundIngrediant.CreatorId = ingrediant.CreatorId;
+            foundIngrediant.Name =
+            foundIngrediant.creatorId = ingrediant.creatorId;
             return _ir.edit(foundIngrediant);
         }
 
