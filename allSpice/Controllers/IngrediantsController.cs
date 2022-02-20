@@ -1,6 +1,10 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using allSpice.Models;
+using allSpice.Services;
+using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
+using CodeWorks.Auth0Provider;
 
 namespace allSpice.Controllers
 {
@@ -34,7 +38,8 @@ namespace allSpice.Controllers
         {
             try
             {
-                return Ok(_iss.getById(id));
+                Ingrediant foundIngrediant = _iss.getById(id);
+                return foundIngrediant;
             }
             catch (System.Exception e)
             {
@@ -79,13 +84,13 @@ namespace allSpice.Controllers
         // ANCHOR EDIT
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<ActionResult<Ingrediant>> edit([FromBody] Ingrediant ingrediant, int id)
+        public async Task<ActionResult<Ingrediant>> edit([FromBody] Ingrediant updated, int id)
         {
             try
             {
                 Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
-                ingrediant.Id = id;
-                return Ok(_iss.edit(ingrediant, userInfo.Id));
+                updated.Id = id;
+                return Ok(_iss.edit(updated, userInfo.Id));
             }
             catch (System.Exception e)
             {

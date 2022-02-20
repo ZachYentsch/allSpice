@@ -30,7 +30,8 @@ namespace allSpice.Services
 
         internal Ingrediant create(Ingrediant newIngrediant)
         {
-            return _ir.create(newIngrediant);
+            Ingrediant ingrediant = _ir.create(newIngrediant);
+            return ingrediant;
         }
 
         internal void remove(int id, string userId)
@@ -43,16 +44,18 @@ namespace allSpice.Services
             _ir.remove(id);
         }
 
-        internal Ingrediant edit(Ingrediant ingrediant, string userId)
+        internal Ingrediant edit(Ingrediant updated, string userId)
         {
-            Ingrediant foundIngrediant = getById(ingrediant.Id);
+            Ingrediant foundIngrediant = getById(updated.Id);
             if (foundIngrediant.creatorId.ToString() != userId)
             {
                 throw new Exception("UnAuthorized");
             }
-            foundIngrediant.Name =
-            foundIngrediant.creatorId = ingrediant.creatorId;
-            return _ir.edit(foundIngrediant);
+            foundIngrediant.Name = updated.Name != null ? updated.Name : foundIngrediant.Name;
+            foundIngrediant.Quantity = updated.Quantity != 0 ? updated.Quantity : foundIngrediant.Quantity;
+            foundIngrediant.creatorId = updated.creatorId;
+            _ir.edit(updated);
+            return foundIngrediant;
         }
 
     }
